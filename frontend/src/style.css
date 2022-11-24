@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Poppins:wght@300;400;500;700&display=swap');
+
+@font-face {
+  font-family: 'Audiowide';
+  src: local('Audiowide'), url('./assets/fonts/AudiowideRegular.woff2') format('woff2');
+}
+
+/** Chirp */
+@font-face {
+  font-family: 'Chirp';
+  font-weight: 400;
+  src: url('./assets/fonts/chirp/chirp_light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Chirp';
+  font-weight: 500;
+  src: url('./assets/fonts/chirp/chirp_regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Chirp';
+  font-weight: 600;
+  src: url('./assets/fonts/chirp/chirp_medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Chirp';
+  font-weight: 700;
+  src: url('./assets/fonts/chirp/chirp_bold.woff2') format('woff2');
+}
+
+/** Tailwind start */
+@tailwind base;
+
+@layer base {
+  html {
+    font-family: theme(fontFamily.primary);
+    height: 100%;
+  }
+
+  body,
+  #app {
+    height: 100%;
+  }
+
+  h1 {
+    @apply text-4xl;
+  }
+  h2 {
+    @apply text-2xl;
+  }
+  h3 {
+    @apply text-xl;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-extrabold;
+  }
+  a {
+    @apply text-blue-600 text-inherit no-underline;
+  }
+}
+
+@tailwind components;
+@tailwind utilities;

@@ -1,0 +1,6 @@
+.vscode
+venv
+frontend/.vscode
+frontend/node_modules
+backend/media/avatars/
+backend/media/events/
