@@ -24,9 +24,9 @@ export const EventApiModule = {
     }
   },
 
-  postEvent: async (eventData:SingleEventCreate): Promise<AxiosError<unknown, any> | SingleEventDetail> => {
+  postEvent: async (eventData:SingleEventCreate): Promise<AxiosError<unknown, any> | SingleEventDetail[]> => {
     try {
-      const apiCall = await api.post<SingleEventDetail>(EventEndpoints.eventsEndpoint(), eventData)
+      const apiCall = await api.post<SingleEventDetail[]>(EventEndpoints.eventsEndpoint(), eventData)
       return apiCall.data
     } catch (error) {
       return error as AxiosError

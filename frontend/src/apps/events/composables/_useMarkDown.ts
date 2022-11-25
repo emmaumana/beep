@@ -2,8 +2,8 @@ import { marked } from 'marked'
 import { ref, watch } from 'vue'
 
 export function useMarkdown(input: string) {
-  const rawText = ref(input)
-  const parsedOutput = ref(marked.parse(input))
+  let rawText = ref(input)
+  let parsedOutput = ref(marked.parse(input))
 
   watch(rawText, newVal => {
     if (newVal) {

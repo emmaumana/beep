@@ -42,13 +42,12 @@ const { showEditor, changeEditorVisibilty, submitUpdate, EventCardEditor } = use
 
   p {
     &:has(img) {
-      margin: 16px 0 12px;
+      display: inline-block;
+      padding: 12px 20px 16px;
     }
     img {
-      display: inline-block;
-      height: 250px;
-      width: 250px;
-      padding: 12px 0 16px;
+      height: 200px;
+      width: 200px;
     }
   }
 

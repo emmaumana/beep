@@ -15,9 +15,8 @@ class UserList(APIView):
 	View to list all users in the system.
 
 	* Requires token authentication.
-	* Only admin users are able to access this view.
 	"""
-	permission_classes = [permissions.IsAdminUser]
+	permission_classes = [permissions.IsAuthenticated]
 
 	def get(self, request, format=None):
 		"""

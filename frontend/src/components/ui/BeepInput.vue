@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+  inheritAttrs: false
+}
+</script>
+
 <script setup lang="ts">
 interface InputFileEvent extends Event {
   target: HTMLInputElement
@@ -20,6 +26,7 @@ defineEmits(['update:modelValue'])
       :value="modelValue"
       :type="props.type"
       :placeholder="placeholder"
+      v-bind="$attrs"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     />
   </div>

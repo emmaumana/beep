@@ -23,7 +23,7 @@ class EventList(APIView):
         """
         Return a list of all events.
         """
-        queryset = EventModels.Event.objects.prefetch_related('attendees', 'likes').order_by('date_start').all()
+        queryset = EventModels.Event.objects.prefetch_related('attendees', 'likes').order_by('-created').all()
         serializer = EventSerializers.EventSerializer(queryset, many=True, context={ 'request': request })
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -37,7 +37,10 @@ class EventList(APIView):
             serializer.validated_data['editor'] = request.user
             serializer.save()
             
-            response_serializer = EventSerializers.EventDetailSerializer(serializer, context={ 'request': request })
+            events = EventModels.Event.objects.order_by('-created').all()
+
+            
+            response_serializer = EventSerializers.EventDetailSerializer(events, many=True,context={ 'request': request })
             return Response(data=response_serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)

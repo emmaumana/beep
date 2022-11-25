@@ -35,11 +35,17 @@ export const useEventStore = defineStore('events', {
     },
 
     async addEvent(data:SingleEventCreate) {
-      const responseData = await beepApi.Events.fechEvents()
+      const responseData = await beepApi.Events.postEvent(data)
       if( axios.isAxiosError(responseData) ) return responseData.response?.status
 
-      this.events = responseData
+      this.events = [...responseData]
       return responseData
+    },
+
+    async deleteEvent(id:number) {
+      const responseData = await beepApi.Events.deleteEvent(id)
+      if( axios.isAxiosError(responseData) ) return responseData.response?.status
+      this.events = this.events.filter(event => event.id !== id)
     },
 
     async updateEvent(id:number, updatedData:SingleEventUpdate) {
