@@ -23,7 +23,7 @@ class EventList(APIView):
         """
         Return a list of all events.
         """
-        queryset = EventModels.Event.objects.prefetch_related('attendees').order_by('created').all()
+        queryset = EventModels.Event.objects.prefetch_related('attendees', 'likes').order_by('date_start').all()
         serializer = EventSerializers.EventSerializer(queryset, many=True, context={ 'request': request })
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -36,7 +36,9 @@ class EventList(APIView):
             serializer.validated_data['created_by'] = request.user
             serializer.validated_data['editor'] = request.user
             serializer.save()
-            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+            
+            response_serializer = EventSerializers.EventDetailSerializer(serializer, context={ 'request': request })
+            return Response(data=response_serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -48,7 +50,10 @@ class EventDetail(APIView):
 
     * Requires token authentication.
     """
+    from rest_framework.parsers import MultiPartParser, FormParser
+
     permission_classes = [permissions.IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
 
     def get_object(self, pk):
         return get_object_or_404(EventModels.Event, id=pk)
@@ -67,7 +72,7 @@ class EventDetail(APIView):
             # adding the new editor
             serializer.validated_data['editor'] = request.user
             serializer.save()
-            return Response(EventSerializers.EventDetailSerializer(event).data, status=status.HTTP_200_OK)
+            return Response(EventSerializers.EventDetailSerializer(event, context={ 'request': request }).data, status=status.HTTP_200_OK)
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
