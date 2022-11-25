@@ -1,32 +1,13 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useEventStore } from '../../store'
-import { useMarkdown } from '@/apps/events/composables'
-
-import type  { SingleEvent } from '../../interfaces'
-import EventCardEditor from './EventCardEditor.vue'
+import { useMarkdown, useEventEditor } from '@/apps/events/composables'
+import type { SingleEvent } from '../../interfaces'
 
 const props = defineProps<{
   event: SingleEvent
 }>()
 
-const showEditor = ref(false)
-const eventStore = useEventStore()
-
-const eventDescription = ref(props.event.description)
-
-const eventParsedDescription = computed(() => useMarkdown(eventDescription.value))
-
-const changeEditorVisibilty = () => {
-  showEditor.value = !showEditor.value
-}
-
-const submitUpdate = async () => {
-  const updateResponse = await eventStore.updateEvent(props.event.id, { 'description': eventDescription.value })
-
-  if(!updateResponse) return
-  changeEditorVisibilty()
-}
+const { rawText, parsedOutput } = useMarkdown(props.event.description)
+const { showEditor, changeEditorVisibilty, submitUpdate, EventCardEditor } = useEventEditor(props.event)
 </script>
 
 <template>
@@ -34,15 +15,15 @@ const submitUpdate = async () => {
     v-if="!showEditor"
     @click="changeEditorVisibilty"
     class="event-card__description hover:bg-slate-50 cursor-pointer p-2 rounded"
-    v-html="eventParsedDescription"
-    data-focus="true"
+    v-html="parsedOutput"
   ></div>
   <EventCardEditor
     v-else
-    @saved="submitUpdate"
+    @saved="submitUpdate('description', rawText)"
     @canceled="changeEditorVisibilty"
-    @keydown.meta.enter="submitUpdate"
-    v-model="eventDescription"
+    @keydown.meta.enter="submitUpdate('description', rawText)"
+    v-model="rawText"
+    :isBig="true"
   />
 </template>
 
@@ -57,6 +38,22 @@ const submitUpdate = async () => {
   ul {
     list-style: disc;
     padding: 20px 10px;
+  }
+
+  p {
+    &:has(img) {
+      margin: 16px 0 12px;
+    }
+    img {
+      display: inline-block;
+      height: 250px;
+      width: 250px;
+      padding: 12px 0 16px;
+    }
+  }
+
+  hr {
+    margin: 20px 0;
   }
 
   a {

@@ -2,17 +2,19 @@ import axios, { AxiosError } from 'axios'
 import { beepApi } from '@/services'
 import { defineStore } from 'pinia'
 
-import type { SingleEventDetail, SingleEvent, SingleEventUpdate } from '../interfaces'
+import type { SingleEventDetail, SingleEvent, SingleEventUpdate, SingleEventCreate } from '../interfaces'
 
 interface EventState {
   event: SingleEventDetail | null,
-  events: SingleEvent[]
+  events: SingleEvent[],
+  isCreateFormOpen: boolean
 }
 
 export const useEventStore = defineStore('events', {
   state: (): EventState => ({
     event: null,
-    events: []
+    events: [],
+    isCreateFormOpen: false
   }),
 
   actions: {
@@ -32,8 +34,16 @@ export const useEventStore = defineStore('events', {
       return responseData
     },
 
+    async addEvent(data:SingleEventCreate) {
+      const responseData = await beepApi.Events.fechEvents()
+      if( axios.isAxiosError(responseData) ) return responseData.response?.status
+
+      this.events = responseData
+      return responseData
+    },
+
     async updateEvent(id:number, updatedData:SingleEventUpdate) {
-      const responseData = await beepApi.Events.requestUpdate(id, updatedData)
+      const responseData = await beepApi.Events.updateEvent(id, updatedData)
 
       if( axios.isAxiosError(responseData) ) return responseData.response?.status
 
@@ -50,12 +60,16 @@ export const useEventStore = defineStore('events', {
               event.likes = responseData.likes
             }
           } else {
-            Object.assign(event, updatedData)
+            Object.assign(event, responseData)
           }
         }
       }
 
       return event
+    },
+
+    toggleEventCreateForm():void {
+      this.isCreateFormOpen = !this.isCreateFormOpen
     }
   },
 

@@ -18,8 +18,13 @@ router.beforeEach(async to => {
   // User is logged in? ⤵
   if (to.matched.some(url => url.meta.requireAuth) && !userStore.user) {
     return {
-      name: 'login',
+      name: 'login-view',
       query: { redirect: to.fullPath }
+    }
+  }
+  if (!to.matched.length) {
+    return {
+      name: 'event-listing'
     }
   }
 })

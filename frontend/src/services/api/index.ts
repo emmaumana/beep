@@ -8,7 +8,7 @@ const instance = axios.create({
   withCredentials: true,
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'multipart/form-data'
   }
 })
 
@@ -24,9 +24,9 @@ const clearApiTokenHeader = (): void => {
   instance.defaults.headers.common['Authorization'] = ''
 }
 
-// instance.interceptors.response.use(response => {
-//   // Everything went well, pass only relevant data through
-//   return response.data
+// instance.interceptors.request.use(response => {
+//   console.log(response)
+//   return response
 // })
 
 const api = instance

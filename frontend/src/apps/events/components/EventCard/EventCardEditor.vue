@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import BeepButton from '@/components/ui/BeepButton.vue'
+import { computed } from 'vue'
 
-defineProps<{
+const props = defineProps<{
   modelValue: string
+  isBig?: boolean
 }>()
+
+const bigClasses = computed(() => (props.isBig ? 'h-48' : ''))
 
 defineEmits(['saved', 'canceled', 'update:modelValue'])
 </script>
@@ -12,10 +16,11 @@ defineEmits(['saved', 'canceled', 'update:modelValue'])
     <textarea
       :value="modelValue"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-      class="event-card__editor-text p-3 border-slate-300 focus:border-accent focus:ring-0 rounded w-full h-48"
+      class="event-card__editor-text p-3 border-slate-300 focus:border-accent focus:ring-0 rounded  w-full resize-none"
+      :class="[bigClasses]"
     >
     </textarea>
-    <div class="event-card__editor-actions felx gap-2">
+    <div class="event-card__editor-actions flex gap-2">
       <BeepButton
         @click="$emit('saved')"
         class="hover:bg-accent hover:text-white w-20 font-semibold"

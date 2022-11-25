@@ -1,9 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main class="main-app">
+  <div class="auth-app">
     <RouterView />
-  </main>
+  </div>
 </template>
 
-<style lang="sass" scoped></style>
+<style scoped></style>

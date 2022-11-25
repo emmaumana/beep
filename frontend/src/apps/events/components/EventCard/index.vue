@@ -7,7 +7,8 @@ import EventCardTitle from './EventCardTitle.vue'
 import EventCardDescription from './EventCardDescription.vue'
 import EventCardActions from './EventCardActions.vue'
 import EventCardReactions from './EventCardReactions.vue'
-import EventCardLocationTime from './EventCardLocationTime.vue'
+import EventCardDate from './EventCardDate.vue'
+import EventCardLocation from './EventCardLocation.vue'
 
 import type { SingleEvent } from '../../interfaces'
 import { useUserStore } from '@/apps/users/store'
@@ -31,7 +32,7 @@ onMounted( async()=> {
     class="event-card grid gap-y-4 bg-white shadow-sm hover:shadow-md px-4 py-5 transition-shadow rounded-lg font-secondary font-normal"
   >
     <!-- author -->
-    <div v-if="eventOwner" class="event-card__author flex items-center font-semibold gap-3 mb-3">
+    <div v-if="eventOwner" class="event-card__author flex items-center font-semibold gap-3 mb-1">
       <span title="Author">
         <BeepAvatar :src="eventOwner.avatar" />
       </span>
@@ -40,10 +41,11 @@ onMounted( async()=> {
     <!-- event cover -->
     <EventCardCover :event="event" />
     <!-- event heading -->
-    <div class="event-card__heading grid gap-y-4">
+    <div class="event-card__heading grid">
       <EventCardTitle :event="event" />
       <!-- card location & time -->
-      <EventCardLocationTime :event="event" />
+      <EventCardLocation :event="event" />
+      <EventCardDate :event="event" />
     </div>
     <!-- event body -->
     <div class="event-card__body">
@@ -51,7 +53,7 @@ onMounted( async()=> {
     </div>
     <!-- event info -->
     <div class="event-card__info flex items-center justify-between gap-6">
-      <EventCardReactions :event="event" />
+      <EventCardReactions v-if="event.attendees || event.likes" :event="event" />
       <!-- actions -->
       <EventCardActions :event="event" />
     </div>

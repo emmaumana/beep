@@ -12,7 +12,7 @@ const userStore = useUserStore()
       <div class="topbar__brand">
         <a href="/" class="topbar__link">
           <figure class="topbar__logo">
-            <img class="h-4 w-auto flex-none" src="/soundtrack.svg" alt="user-avatar" />
+            <img class="h-6 w-auto flex-none" src="/beep-logo.svg" alt="user-avatar" />
           </figure>
         </a>
       </div>

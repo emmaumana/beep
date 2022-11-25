@@ -33,23 +33,25 @@ const requestLogin = async () => {
 </script>
 
 <template>
-  <div class="login-page h-full">
-    <div
-      class="login-form flex justify-end gap-5 shadow-md bg-white sm:overflow-hidden sm:rounded-lg relative top-16 mx-auto max-w-screen-lg h-4/5"
-    >
+  <div class="login-page">
+    <div class="login-form flex flex-row gap-5 bg-white relative max-h-[100vh]">
       <!-- cover image -->
-      <div class="form-image absolute top-0 h-full left-0 w-3/4">
-        <img class="w-full h-full object-cover object-bottom" src="/covers/login-3.jpeg" alt="" />
+      <div class="login-form__image w-4/5 max-h-fit">
+        <img
+          class="w-full h-full max-w-full object-cover object-bottom"
+          src="/covers/login-3.jpeg"
+          alt="login"
+        />
       </div>
       <!-- form  -->
       <div
-        class="form-wrapper z-10 bg-white flex justify-center items-center flex-col skew-x-3 w-2/4 p-16 space-y-10"
+        class="form-wrapper z-10 bg-white flex justify-center w-2/5 items-center flex-col skew-x-3 p-7 space-y-10"
       >
         <!-- logo -->
         <figure class="form-logo flex flex-col items-center gap-4 -skew-x-3">
-          <img class="h-16" src="/soundtrack.svg" />
+          <img class="h-16" src="/beep-logo.svg" />
           <p class="text-slate-600 text-center text-sm font-primary">
-            Music events to the next level
+            Your events to the next level
           </p>
         </figure>
         <BeepForm class="-skew-x-3">
@@ -58,7 +60,7 @@ const requestLogin = async () => {
             <BeepInput placeholder="password" type="password" v-model="userData.password" />
           </template>
           <template #actions>
-            <router-link class="w-2/4" :to="{ name: 'register' }">
+            <router-link class="w-2/4" :to="{ name: 'register-view' }">
               <BeepButton class="w-full" secondary outlined>
                 Sign Up
               </BeepButton>

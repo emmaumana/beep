@@ -24,9 +24,18 @@ export interface SingleEventDetail extends SingleEvent {
 export interface SingleEventUpdate {
   title?: string
   description?: string
-  cover?: string
+  cover?: File | string
   attendees?: number[]
   likes?: number[]
   date_start?: string
   date_end?: string
+}
+
+export interface SingleEventCreate {
+  title: string
+  description: string
+  cover?: File | string
+  location: string
+  date_start: string
+  date_end: string
 }
